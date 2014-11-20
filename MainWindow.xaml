@@ -1,0 +1,16 @@
+<Window x:Class="S.E.NDS.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Newspaper Delivery System - Courier View" Height="350" Width="525">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="303" VerticalAlignment="Top" Width="497">
+        <StackPanel Margin="0,10" Width="165">
+            <Button Content="Manager" Click="Button_Click"/>
+            <Button Content="Courier"/>
+            <ListBox Height="238"/>
+        </StackPanel>
+        <StackPanel Margin="0,10,0,23" Width="319">
+            <ListBox Height="246"/>
+            <Button Content="Print Monthly Bill"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
