@@ -1,15 +1,16 @@
-<Window x:Class="S.E.NDS.Window1"
+<Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="S.E.NDS.Window1"
     Title="Newspaper Delivery System - Manager View" Height="350" Width="525">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="311" VerticalAlignment="Top" Width="505">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="325" VerticalAlignment="Top" Width="520">
         <StackPanel Width="121">
-            <Button Content="Manager"/>
-            <Button Content="Courier"/>
-            <ListBox Height="251"/>
-            <Button Content="Add New Customer"/>
+            <Button x:Name="btn_Manager_MngView" Content="Manager" IsEnabled="False"/>
+            <Button x:Name="btn_Courier_MngView" Content="Courier" Click="btn_CourierMngView_Click"/>
+            <ListBox Name="CustomerList_MngView" Height="251" Selected="CustomerList_MngView_Selected"/>
+            <Button Name="btn_AddCustomer" Content="Add New Customer" IsEnabled="False" Click="btn_AddCustomer_Click"/>
         </StackPanel>
-        <StackPanel Width="275">
+        <StackPanel Name="StkPnl_CustomerForm" Width="275" IsEnabled="False">
             <Grid Height="Auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -33,21 +34,23 @@
                 <Label Grid.Row="5" Grid.Column="0" Content="Important Notes:"/>
                 <Label Grid.Row="6" Grid.Column="0" Content="Assigned Courier:"/>
                 <Label Grid.Row="7" Grid.Column="0" Content="Submit Data"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Margin="3" />
-                <TextBox Grid.Column="1" Grid.Row="1" Margin="3" />
-                <TextBox Grid.Column="1" Grid.Row="2" Margin="3" />
-                <TextBox Grid.Column="1" Grid.Row="3" Margin="3" />
-                <TextBox Grid.Column="1" Grid.Row="4" Margin="3" />
-                <TextBox Grid.Column="1" Grid.Row="5" Margin="3" />
-                <TextBox Grid.Column="1" Grid.Row="6" Margin="3" />
-                <Button Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right" 
-                MinWidth="80" Margin="3" Content="Send"  />
+                <TextBox Name="NameTxtBox" Grid.Column="1" Grid.Row="0" Margin="3" />
+                <TextBox Name="AddressTxtBox" Grid.Column="1" Grid.Row="1" Margin="3" />
+                <TextBox Name="PublicationTxtBox" Grid.Column="1" Grid.Row="2" Margin="3" />
+                <TextBox Name="MonthlyTxtBox" Grid.Column="1" Grid.Row="3" Margin="3" />
+                <TextBox Name="GeoRankTxtBox" Grid.Column="1" Grid.Row="4" Margin="3" />
+                <TextBox Name="ImportantNoteTxtBox" Grid.Column="1" Grid.Row="5" Margin="3" />
+                <TextBox Name="CourierAssignTxtBox" Grid.Column="1" Grid.Row="6" Margin="3" />
+                <Button Name="btn_MngrSubmit" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right" 
+					MinWidth="80" Margin="3" Content="Send" Click="btn_MngrSubmit_Click"/>
             </Grid>
+            <CheckBox x:Name="chkbox_Inactive"  Content="Inactive"  Checked="chkbox_Inactive_Checked" IsEnabled="False"/>
         </StackPanel>
 
-        <StackPanel Width="102">
-            <ListBox Height="291"/>
-            <Button Content="Add New Courier" Click="Button_Click"/>
+        <StackPanel Width="120">
+            <ListBox x:Name="CourierList_MngView" Height="291" >
+            </ListBox>
+            <Button x:Name="btn_AddCourier" Content="Add New Courier" Click="btn_AddCourier_Click"/>
         </StackPanel>
     </StackPanel>
 
