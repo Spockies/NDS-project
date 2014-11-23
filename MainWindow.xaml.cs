@@ -24,5 +24,15 @@ namespace S.E.NDS
         {
             InitializeComponent();
         }
+
+        private void PrintBill_CrrView_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Manager_CrrView_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
