@@ -27,10 +27,12 @@ namespace S.E.NDS
             InitializeComponent();
         }
 
+        //Used when adding to the database a new customer
         private void btn_MngrSubmit_Click(object sender, RoutedEventArgs e)
         {
 
-            //Retrieves info for database insertion
+            //Retrieves info for database insertion as strings
+            
             //NameTxtBox.Text
             //AddressTxtBox.Text
             //PublicationTxtBox.Text
@@ -39,25 +41,34 @@ namespace S.E.NDS
             //ImportantNoteTxtBox.Text
             //CourierAssignTxtBox.Text
 
-            //Insert into listbox with name as "key"
-            Label tempLabel = new Label();
-            tempLabel.Content = NameTxtBox.Text;
+            //Insert into listbox with name string as the "key"
+            ListBoxItem tempItem = new ListBoxItem();
+            tempItem.Content = NameTxtBox.Text;
 
-            CustomerList_MngView.Items.Add(tempLabel);
+            //Set up context menu on right click for editing or delete
+            tempItem.ContextMenu = this.FindResource("editContextMenu") as ContextMenu;
+
+            //Adds right click function to edit selected field
+            CustomerList_MngView.Items.Add(tempItem);
 
             //clears fields then disable form
 
-            NameTxtBox.Text="";
-            AddressTxtBox.Text = "";
-            PublicationTxtBox.Text="";
-            MonthlyTxtBox.Text="";
-            GeoRankTxtBox.Text="";
-            ImportantNoteTxtBox.Text="";
-            CourierAssignTxtBox.Text = "";
+            clearDataFields();
             chkbox_Inactive.IsEnabled=true;
 
             //disable form
             StkPnl_CustomerForm.IsEnabled = false;
+        }
+
+        private void clearDataFields()
+        {
+            NameTxtBox.Text = "";
+            AddressTxtBox.Text = "";
+            PublicationTxtBox.Text = "";
+            MonthlyTxtBox.Text = "";
+            GeoRankTxtBox.Text = "";
+            ImportantNoteTxtBox.Text = "";
+            CourierAssignTxtBox.Text = "";
         }
 
         private void btn_CourierMngView_Click(object sender, RoutedEventArgs e)
@@ -70,8 +81,14 @@ namespace S.E.NDS
         {
             if (chkbox_Inactive.IsChecked==true)
             {
-                //Set inactive in database
+                //Set activity in database to false
             }
+            else 
+            { 
+                //reset activity field to true
+            }
+
+                
         }
         
         private void btn_AddCourier_Click(object sender, RoutedEventArgs e)
@@ -120,20 +137,31 @@ namespace S.E.NDS
 
         private void btn_AddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            //Enable Customer info to be filled in the form
+            //Enable new Customer info to be filled in the form
+            clearDataFields();
+            //Edit/Submit button swapping
+            btn_MngrSubmit.Visibility = Visibility.Visible;
+            btn_MngrEdit.Visibility = Visibility.Hidden;
+
             StkPnl_CustomerForm.IsEnabled = true;
             chkbox_Inactive.IsEnabled = false;
         }
-        //Event For customer selected in manager view
-        private void CustomerList_MngView_Selected(object sender, RoutedEventArgs e)
+        //Event For customer selected in manager view, read-only mode; right click for option to edit
+        private void CustomerList_MngView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //If enabled already, then disable
+            if (StkPnl_CustomerForm.IsEnabled == true)
+            {
+                StkPnl_CustomerForm.IsEnabled = false;
+            }
             //Traverses controls to get key
-            ListBox customerBox = sender as ListBox;
-            Label customerLabel = customerBox.SelectedItem as Label;
+            ListBoxItem customerItem = ((sender as ListBox).SelectedItem as ListBoxItem);
+            
 
-            //Key
-            //customerLabel.Content;
+            //Key 
+            //customerItem.Content.ToString();
 
+            NameTxtBox.Text = customerItem.Content.ToString();
 
             //Retrieve info from database to insert to edit form using the name as "key"
 
@@ -146,6 +174,43 @@ namespace S.E.NDS
             //GeoRankTxtBox.Text
             //ImportantNoteTxtBox.Text
             //CourierAssignTxtBox.Text
+        }
+
+        //Rightclick option
+        private void MenuItem_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            //Swap Edit/Submit buttons
+            btn_MngrSubmit.Visibility = Visibility.Hidden;
+            btn_MngrEdit.Visibility = Visibility.Visible;
+            StkPnl_CustomerForm.IsEnabled = true;
+
+
+            //Decision? 
+            //***************************************************
+            //When editing customer data, the key should not be altered which in this current iteration is the name.
+
+            NameTxtBox.IsEnabled = false;
+        }
+        //Rightclick option
+        private void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_MngrEdit_Click(object sender, RoutedEventArgs e)
+        {
+            //Retrieve all info on customer form and update database
+            //Name is the "key"
+            //NameTxtBox.Text
+            //AddressTxtBox.Text
+            //PublicationTxtBox.Text
+            //MonthlyTxtBox.Text
+            //GeoRankTxtBox.Text
+            //ImportantNoteTxtBox.Text
+            //CourierAssignTxtBox.Text
+
+
+
         }
 
     }
