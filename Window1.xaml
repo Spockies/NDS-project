@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="S.E.NDS.Window1"
-    Title="Newspaper Delivery System - Manager View" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+    Title="Newspaper Delivery System - Manager View" Height="350" Width="525" WindowStartupLocation="Manual"
+    Loaded="Window_Loaded">
     <Window.Resources>
         <ContextMenu x:Key="editContextMenu" >
             <MenuItem Name="MenuEdit" Header="Edit" Click="MenuItem_Edit_Click"/>
@@ -57,7 +58,12 @@
         </StackPanel>
 
         <StackPanel Width="120">
-            <ListBox x:Name="CourierList_MngView" Height="291" >
+            <ListBox x:Name="CourierList_MngView" Height="291" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding name}" Click="RemoveCourierButton"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
             <Button x:Name="btn_AddCourier" Content="Add New Courier" Click="btn_AddCourier_Click"/>
         </StackPanel>
