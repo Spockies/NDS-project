@@ -19,6 +19,8 @@ namespace S.E.NDS
     /// </summary>
     public partial class Window1 : Window
     {
+        private List<Customer> _customers;      //contains active and inactive customers
+        private List<Courier> _couriers;        //contains active and inactive couriers
 
         private bool mngrActive = false;    //True if courier exist, false otherwise
 
@@ -32,9 +34,9 @@ namespace S.E.NDS
         {
 
             //Retrieves info for database insertion as strings
-            
-            //NameTxtBox.Text
-            //AddressTxtBox.Text
+
+            string name = NameTxtBox.Text;
+            string address = AddressTxtBox.Text;
             //PublicationTxtBox.Text
             //MonthlyTxtBox.Text
             //GeoRankTxtBox.Text
@@ -73,14 +75,25 @@ namespace S.E.NDS
 
         private void btn_CourierMngView_Click(object sender, RoutedEventArgs e)
         {
-            //Window switch
+            //Must save to database?
+            //Maybe not necessary if database is change whenever modified and new additions
 
+            //Code before this
+
+            //Window switch
+            MainWindow courier = new MainWindow();
+            courier.Left = this.Left;
+            courier.Top = this.Top;
+            
+            courier.Show();
+            this.Close();
         }
 
         private void chkbox_Inactive_Checked(object sender, RoutedEventArgs e)
         {
             if (chkbox_Inactive.IsChecked==true)
             {
+
                 //Set activity in database to false
             }
             else 
@@ -96,19 +109,21 @@ namespace S.E.NDS
             CourierDialog courierNameDialog = new CourierDialog();
             if (courierNameDialog.ShowDialog() == true)
             {
-                string temp = courierNameDialog.Courier_name;               //Fetch Courier name; Doesn't implement proper name checking
-                // Code for database insert of courier name
+                string tempName = courierNameDialog.Courier_name;               //Fetch Courier name; Doesn't implement proper name checking
+                
+                //********************Database insertion for a new courier and active state to true
+                
+
+
+
+                //Creates new object in current _courier list but has no customer attached.
+                Courier tempCourier = new Courier(tempName, true);
+                _couriers.Add(tempCourier);
+
 
                 //code to put courier button in courier name listbox
 
-                Button tempButton = new Button();
-                tempButton.Content = temp;
-                //Find a way to widen button to fill up listbox pane
-
-
-                tempButton.Click+=new RoutedEventHandler(RemoveCourierButton);
-
-                CourierList_MngView.Items.Add(tempButton);
+                //CourierList_MngView.Items.Add(tempCourier);
 
                 mngrActive = true;
             }
@@ -124,6 +139,10 @@ namespace S.E.NDS
         //Deletes Courier button
         private void RemoveCourierButton(object sender, RoutedEventArgs e)
         {
+
+            //Removal of courier shouldn't delete field in database
+            //Extra column 'Active' set as a boolean
+            //query to false when this button event occurs
             Button currentButton = sender as Button;
             CourierList_MngView.Items.Remove(currentButton);
 
@@ -163,6 +182,7 @@ namespace S.E.NDS
 
             NameTxtBox.Text = customerItem.Content.ToString();
 
+            string name = NameTxtBox.Text;
             //Retrieve info from database to insert to edit form using the name as "key"
 
 
@@ -201,6 +221,8 @@ namespace S.E.NDS
         {
             //Retrieve all info on customer form and update database
             //Name is the "key"
+
+
             //NameTxtBox.Text
             //AddressTxtBox.Text
             //PublicationTxtBox.Text
@@ -209,9 +231,38 @@ namespace S.E.NDS
             //ImportantNoteTxtBox.Text
             //CourierAssignTxtBox.Text
 
-
-
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {   //When window is activated, populate courier and customer list from database
+            //then render to the listboxes the courier info and customer info respectively
+            Courier_Fetch();
+            Customer_Fetch();
+            Populate_Courier_Box();
+            Populate_Customer_Box();
+        }
+        private void Courier_Fetch()
+        {
+            //Code here for connecting to database and adding to the list _couriers
+            //_couriers is the list of all couriers in the database, active or not
+
+        }
+        private void Customer_Fetch()
+        {
+            //Code here for connecting to database and adding to the list _customers
+            //_customer is the list of all customers in the database, active or not
+        }
+        private void Populate_Courier_Box()
+        {
+            //****Uncomment when _courier is populated*****
+
+            //*****************ENDOF Uncomment here when everything is loaded*******************
+        }
+        private void Populate_Customer_Box()
+        {
+            //****Uncomment when _customer is populated*****
+
+            //*****************ENDOF Uncomment here when everything is loaded*******************
+        }
     }
 }
