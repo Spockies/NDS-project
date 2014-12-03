@@ -1,16 +1,45 @@
 <Window x:Class="S.E.NDS.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Newspaper Delivery System - Courier View" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+    Loaded="Window_Loaded"
+    Title="Newspaper Delivery System - Courier View" Height="350" Width="525" WindowStartupLocation="Manual">
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="311" VerticalAlignment="Top" Width="505">
         <StackPanel Margin="0,10" Width="165">
             <Button Name="btn_Manager_CrrView" Content="Manager" Click="btn_Manager_CrrView_Click"/>
             <Button Name="btn_Courier_CrrView" Content="Courier" IsEnabled="False"/>
-            <ListBox Name="CourierList_CrrView" Height="238"/>
+            <ListBox Name="CourierList_CrrView" Height="238" SelectionChanged="CourierList_CrrView_SelectionChanged" SelectionMode="Single"/>
         </StackPanel>
         <StackPanel Name="CustomerListPanel_CrrView" Margin="0,10,0,23" Width="319" IsEnabled="False">
-            <ListBox Name="CrrCustomerinfo_CrrView" Height="246"/>
-            <Button Name="PrintBill_CrrView" Content="Print Monthly Bill" Click="PrintBill_CrrView_Click"/>
+            <ListBox Name="CrrCustomerinfo_CrrView" Height="246">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" >
+                            <WrapPanel>
+                               <Label Content= "Name: {Binding name}"/> 
+                            </WrapPanel>
+                            <WrapPanel>
+                                 <Label Content="Address:{Binding address}"/> 
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Content="Publications: {Binding publications}"/> 
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Content="Monthly Total: {Binding monthlyTotal}" />
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Content="GeoRank: {Binding geoRank}"/> 
+                            </WrapPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <WrapPanel HorizontalAlignment="Center" >
+                <Button Name="Print_Route" Content="Print Route" Click="Print_Route_Click" Margin="5"/>
+                <Button Name="Delivery_History" Content="Delivery History" Click="Delivery_History_Click" Margin="5"/>
+                <Button Name="PrintBill_CrrView" Content="Print Monthly Bill" Click="PrintBill_CrrView_Click" Margin="5"/>
+            </WrapPanel>
+            
         </StackPanel>
     </StackPanel>
 </Window>
+    
