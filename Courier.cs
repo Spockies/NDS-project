@@ -6,33 +6,53 @@ using System.Threading.Tasks;
 
 namespace S.E.NDS
 {
-    class Courier:IComparable
+    public class Courier : IComparable
     {
-        private string name {get; set;}
-        private bool active { get; set; }
-        private List<string> customerNames;
+        public string Name { get; set; }
+        public bool Active { get; set; }
+        public List<string> CustomerNames { get; set; }
+        public List<int> GeoCoverage { get; set; }
+        public int CourierID { get; set; }
+
+
         public Courier()
         {
-            name = "";
-            active = false;
-            customerNames = null;
+            Name = "";
+            Active = false;
+            CustomerNames = new List<string>();
+            GeoCoverage = new List<int>();
+            CourierID = -1;
         }
-        public Courier(string _name,bool _active,List<string> _customerNames)
+        public Courier(string _name, bool _active, List<string> _customerNames,List<int> _geoCover)
         {
-            name = _name;
-            active = _active;
-            customerNames = _customerNames;
+            Name = _name;
+            Active = _active;
+            CustomerNames = _customerNames;
+            GeoCoverage = _geoCover;
+            CourierID = -1;
         }
         public Courier(string _name, bool _active)
         {
-            name = _name;
-            active = _active;
-            customerNames = new List<string>();
+            Name = _name;
+            Active = _active;
+            CustomerNames = new List<string>();
+            GeoCoverage = new List<int>();
+            CourierID = -1;
         }
 
         public int CompareTo(object obj)
         {
             throw new NotImplementedException();
         }
+        public bool Equals(object o)
+        {
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }
